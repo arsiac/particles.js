@@ -68,11 +68,19 @@ function isInArray(value, array) {
   return array.indexOf(value) > -1;
 }
 
+function rgba(red, green, blue, alpha = 1) {
+  return `rgba(${red},${green},${blue},${alpha})`
+}
+
+function hsla(hue, saturation, lightness, alpha = 1) {
+  return `hsla(${hue},${saturation}%,${lightness}%,${alpha})`
+}
+
 /* ---------- pJS ------------ */
 let pJSDom = [];
 
 const particles = function(tag_id, params) {
-  const canvas_el = document.querySelector('#' + tag_id + ' > .particles-js-canvas-el');
+  const canvas_el = document.querySelector(`#${tag_id} > .particles-js-canvas-el`);
 
   /* particles.js variables with default values */
   this.pJS = {
@@ -463,9 +471,9 @@ const particles = function(tag_id, params) {
     }
 
     if (p.color.rgb) {
-      color_value = 'rgba(' + p.color.rgb.r + ',' + p.color.rgb.g + ',' + p.color.rgb.b + ',' + opacity + ')';
+      color_value = rgba(p.color.rgb.r, p.color.rgb.g, p.color.rgb.b, opacity);
     } else {
-      color_value = 'hsla(' + p.color.hsl.h + ',' + p.color.hsl.s + '%,' + p.color.hsl.l + '%,' + opacity + ')';
+      color_value = hsla(p.color.hsl.h, p.color.hsl.s, p.color.hsl.l, opacity)
     }
 
     pJS.canvas.ctx.fillStyle = color_value;
@@ -717,7 +725,8 @@ const particles = function(tag_id, params) {
 
         /* style */
         const color_line = pJS.particles.line_linked.color_rgb_line;
-        pJS.canvas.ctx.strokeStyle = `rgba(${color_line.r},${color_line.g},${color_line.b},${opacity_line})`;
+
+        pJS.canvas.ctx.strokeStyle = rgba(color_line.r, color_line.g, color_line.b, opacity_line);
         pJS.canvas.ctx.lineWidth = pJS.particles.line_linked.width;
         //pJS.canvas.ctx.lineCap = 'round' /* performance issue */
 
@@ -1036,7 +1045,7 @@ const particles = function(tag_id, params) {
 
           /* style */
           const color_line = pJS.particles.line_linked.color_rgb_line;
-          pJS.canvas.ctx.strokeStyle = 'rgba(' + color_line.r + ',' + color_line.g + ',' + color_line.b + ',' + opacity_line + ')';
+          pJS.canvas.ctx.strokeStyle = rgba(color_line.r, color_line.g, color_line.b, opacity_line);
           pJS.canvas.ctx.lineWidth = pJS.particles.line_linked.width;
           //pJS.canvas.ctx.lineCap = 'round' /* performance issue */
 
@@ -1182,12 +1191,12 @@ const particles = function(tag_id, params) {
     /* set color to svg element */
     const svgXml = pJS.tmp.source_svg,
       rgbHex = /#([0-9A-F]{3,6})/gi,
-      coloredSvgXml = svgXml.replace(rgbHex, function(m, r, g, b) {
+      coloredSvgXml = svgXml.replace(rgbHex, function() {
         let color_value;
         if (p.color.rgb) {
-          color_value = 'rgba(' + p.color.rgb.r + ',' + p.color.rgb.g + ',' + p.color.rgb.b + ',' + p.opacity + ')';
+          color_value = rgba(p.color.rgb.r, p.color.rgb.g, p.color.rgb.b, p.opacity);
         } else {
-          color_value = 'hsla(' + p.color.hsl.h + ',' + p.color.hsl.s + '%,' + p.color.hsl.l + '%,' + p.opacity + ')';
+          color_value = hsla(p.color.hsl.h, p.color.hsl.s, p.color.hsl.l, p.opacity);
         }
         return color_value;
       });
@@ -1415,7 +1424,7 @@ particlesJS.load = function(tag_id, path_config_json, callback) {
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
         const params = JSON.parse(data.currentTarget.response);
-        window.particlesJS(tag_id, params);
+        particlesJS(tag_id, params);
         if (callback) callback();
       } else {
         console.log('Error pJS - XMLHttpRequest status: ' + xhr.status);
