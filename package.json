@@ -1,6 +1,6 @@
 {
   "name": "particles.js",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A lightweight JavaScript library for creating particles",
   "homepage": "http://vincentgarreau.com/particles.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/VincentGarreau/particles.js.git"
+    "url": "https://github.com/arsiac/particles.js.git"
   },
   "keywords": [
     "particles",
@@ -22,7 +22,7 @@
     "particles.min.js"
   ],
   "bugs": {
-    "url": "https://github.com/VincentGarreau/particles.js/issues"
+    "url": "https://github.com/arsiac/particles.js/issues"
   },
   "homepage": "https://github.com/VincentGarreau/particles.js"
 }
